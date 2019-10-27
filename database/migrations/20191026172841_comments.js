@@ -4,6 +4,7 @@ exports.up = function(knex) {
         comments.increments('id').primary()
 
         comments.text('comments')
+
     })
 };
 
