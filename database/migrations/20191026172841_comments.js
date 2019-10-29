@@ -1,13 +1,13 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable('comments', comments => {
-        comments.increments('id').primary()
+    return knex.schema.createTable('favoriteCoins', favCoins => {
+        favCoins.increments('id').primary()
 
-        comments.text('comments')
+        favCoins.integer('favoriteCoins')
 
     })
 };
 
 exports.down = function(knex) {
-    return knex.schema.dropTableIfExists('comments')
+    return knex.schema.dropTableIfExists('favoriteCoins')
 };
