@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { ApolloServer, gql } = require('apollo-server');
+const GraphQLJSON = require('graphql-type-json');
 
 const tempCoins = [
     {
@@ -18,15 +19,36 @@ const tempCoins = [
 
 const typeDefs = gql`
 
+    scalar Object
+
     type Coin {
         id: ID
         name: String
         symbol: String
         rank: Int
+        quotes: Quotes
+    }
+
+    type Quotes {
+        USD: USD
+    }
+
+    type USD {
+        price: Float
+        market_cap: Float
+        percent_change_12h: Float
+    }
+
+    type CoinById {
+        id: ID
+        name: String
+        symbol: String
+        description: String
     }
     
     type Query {
         coins: [Coin]
+        coin: CoinById
     }
 `;
 
@@ -34,6 +56,8 @@ const resolvers = {
     Query: {
         coins: () => axios.get('https://api.coinpaprika.com/v1/tickers')
         .then(res => res.data),
+        coin: () => axios.get(`https://api.coinpaprika.com/v1/coins/`)
+        .then(res => res.data)
     }
 }
 
