@@ -1,14 +1,3 @@
-const axios = require('axios');
-const {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLInt,
-    GraphQLFloat,
-    GraphQLSchema,
-    GraphQLList,
-    GraphQLNonNull
-} = require('graphql');
-
 // Coin Type
 const CoinType = new GraphQLObjectType({
     name: 'Coins',
@@ -19,42 +8,12 @@ const CoinType = new GraphQLObjectType({
     })
 })
 
-const QuotesType = new GraphQLObjectType({
-    name: 'quotes',
-    fields: () => ({
-        USD: { USD }
-    })
-})
-
-const USDType = new GraphQLObjectType({
-    name: 'USD',
-    fields: () => ({
-        market_cap: { type: GraphQLFloat },
-        price: { type: GraphQLFloat },
-        price_change_12h: { type: GraphQLFloat },
-    })
-})
-
 // Root Query
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
         coins: {
             type: new GraphQLList(CoinType),
-            resolve(parent, args){
-                return axios.get('https://api.coinpaprika.com/v1/tickers')
-                .then(res => res.data);
-            }
-        },
-        quotes: {
-            type: new GraphQLList(QuotesType),
-            resolve(parent, args){
-                return axios.get('https://api.coinpaprika.com/v1/tickers')
-                .then(res => res.data);
-            }
-        },
-        USD: {
-            type: new GraphQLList(USDType),
             resolve(parent, args){
                 return axios.get('https://api.coinpaprika.com/v1/tickers')
                 .then(res => res.data);
