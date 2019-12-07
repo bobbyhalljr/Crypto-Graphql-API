@@ -1,7 +1,7 @@
 {
-  "name": "Node.js-Backend-Auth-Template",
+  "name": "Crypto-Graphql-API",
   "version": "1.0.0",
-  "description": "This repo is a template for a node backend with a sqlite3 database.",
+  "description": "A graphql API for cryptocurrencies and crypto market data.",
   "main": "server.js",
   "scripts": {
     "server": "nodemon index.js",
