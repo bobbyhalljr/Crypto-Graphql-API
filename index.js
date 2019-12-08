@@ -40,7 +40,7 @@ const typeDefs = gql`
         id: ID
         name: String
         symbol: String
-        # description: String
+        description: String
     }
     
     type Query {
