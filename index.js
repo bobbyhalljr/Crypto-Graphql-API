@@ -1,21 +1,18 @@
 const axios = require('axios');
 const { ApolloServer, gql } = require('apollo-server');
 const GraphQLJSON = require('graphql-type-json');
+const { RESTDataSource } = require('apollo-datasource-rest');
 
-const tempCoins = [
-    {
-        name: "Bitcoin",
-        rank: 1,
-    },
-    {
-        name: "Ethereum",
-        rank: 2,
-    },
-    {
-        name: "Bitcoin Cash",
-        rank: 5,
+class CoinAPI extends RESTDataSource {
+    constructor() {
+        super();
+        this.baseURL = 'https://api.coinpaprika.com/v1';
     }
-];
+
+    async getCoin(id){
+        return this.get(`/coins/${id}`)
+    }
+}
 
 const typeDefs = gql`
 
@@ -43,7 +40,7 @@ const typeDefs = gql`
         id: ID
         name: String
         symbol: String
-        description: String
+        # description: String
     }
     
     type Query {
@@ -56,12 +53,21 @@ const resolvers = {
     Query: {
         coins: () => axios.get('https://api.coinpaprika.com/v1/tickers')
         .then(res => res.data),
-        coin: () => axios.get(`https://api.coinpaprika.com/v1/coins/`)
-        .then(res => res.data)
+        coin: async (_source, { id }, { dataSources }) => {
+            return dataSources.CoinAPI.getCoin(id);
+        }
     }
 }
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({ 
+    typeDefs, 
+    resolvers ,
+    dataSources: () => {
+        return {
+            CoinAPI: new CoinAPI()
+        }
+    }
+})
 
 server.listen().then(({ url }) => {
     console.log(`server is running at ${url}`)
