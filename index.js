@@ -41,6 +41,21 @@ const typeDefs = gql`
         name: String
         symbol: String
         description: String
+        team: [Team]
+        started_at: String
+        proof_type: String
+        hash_algorithm: String
+        whitePaper: String
+        links: [Links]
+    }
+
+    type Team {
+        name: String
+        position: String
+    }
+
+    type Links {
+        website: String
     }
     
     type Query {
