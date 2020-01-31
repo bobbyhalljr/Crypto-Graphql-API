@@ -3,14 +3,29 @@ const { ApolloServer, gql } = require('apollo-server');
 const GraphQLJSON = require('graphql-type-json');
 const { RESTDataSource } = require('apollo-datasource-rest');
 
+
 class CoinAPI extends RESTDataSource {
     constructor() {
         super();
         this.baseURL = 'https://api.coinpaprika.com/v1';
     }
 
+    coinReducer(coin) {
+        return {
+            id: coin.id
+        }
+    }
+
+    // async getCoin(id) {
+    //     const data = await this.get(`coins`, {
+    //         id: id
+    //     })
+    //     return this.coinReducer(coin.id)
+    // }
+
     async getCoin(id){
-        return this.get(`/coins/${id}`)
+        data = this.get(`/coins/${id}`)
+        await data
     }
 }
 
@@ -33,7 +48,7 @@ const typeDefs = gql`
     type USD {
         price: Float
         market_cap: Float
-        percent_change_12h: Float
+        percent_change_1h: Float
     }
 
     type CoinById {
@@ -68,8 +83,9 @@ const resolvers = {
     Query: {
         coins: () => axios.get('https://api.coinpaprika.com/v1/tickers')
         .then(res => res.data),
+        
         coin: async (_source, { id }, { dataSources }) => {
-            return dataSources.CoinAPI.getCoin(id);
+            return dataSources.coinAPI.getCoin(id);
         }
     }
 }
@@ -79,7 +95,7 @@ const server = new ApolloServer({
     resolvers ,
     dataSources: () => {
         return {
-            CoinAPI: new CoinAPI()
+            coinAPI: new CoinAPI()
         }
     }
 })
