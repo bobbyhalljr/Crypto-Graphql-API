@@ -10,22 +10,8 @@ class CoinAPI extends RESTDataSource {
         this.baseURL = 'https://api.coinpaprika.com/v1';
     }
 
-    coinReducer(coin) {
-        return {
-            id: coin.id
-        }
-    }
-
-    // async getCoin(id) {
-    //     const data = await this.get(`coins`, {
-    //         id: id
-    //     })
-    //     return this.coinReducer(coin.id)
-    // }
-
     async getCoin(id){
-        data = this.get(`/coins/${id}`)
-        await data
+        await this.get(`/coins/${id}`)
     }
 }
 
@@ -75,7 +61,7 @@ const typeDefs = gql`
     
     type Query {
         coins: [Coin]
-        coin: CoinById
+        coin(id: String): CoinById
     }
 `;
 
