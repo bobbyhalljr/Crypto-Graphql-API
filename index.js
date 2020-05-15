@@ -55,6 +55,17 @@ const typeDefs = gql`
         position: String
     }
 
+    type PriceConverter {
+        base_currency_id: String
+        base_currency_name: String
+        base_price_last_updated: String
+        quote_currency_id: String
+        quote_currency_name: String
+        quote_price_last_updated: String
+        amount: Int
+        price: Float
+    }
+
     type Links {
         website: String
     }
@@ -68,11 +79,20 @@ const typeDefs = gql`
 const resolvers = {
     Query: {
         coins: () => axios.get('https://api.coinpaprika.com/v1/tickers')
-        .then(res => res.data),
+        .then(res => res.data)
+        .catch(err => new Error(err)),
+
+        coin:() => {
+            console.log('TODO: write coin resolver')
+            // axios.get(`https://api.coinpaprika.com/v1/coins`)
+            // .then(res => {
+            //     axios.get(`https://api.coinpaprika.com/v1/coins${res.data.id}`)
+            //     .then(c => console.log(c))
+            //     .catch(err => new Error(err))
+            // })
+            // .catch(err => new Error(err))
+        },
         
-        coin: async (_source, { id }, { dataSources }) => {
-            return dataSources.coinAPI.getCoin(id);
-        }
     }
 }
 
