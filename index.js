@@ -1,6 +1,4 @@
-const axios = require('axios');
 const { ApolloServer, gql } = require('apollo-server');
-const GraphQLJSON = require('graphql-type-json');
 const { RESTDataSource } = require('apollo-datasource-rest');
 
 
@@ -10,8 +8,12 @@ class CoinAPI extends RESTDataSource {
         this.baseURL = 'https://api.coinpaprika.com/v1';
     }
 
-    async getCoin(id){
-        await this.get(`/coins/${id}`)
+    async getAllCoins(){
+        return this.get('/tickers')
+    }
+
+    async getCoinById(id){
+        return this.get(`/coins/${id}`)
     }
 }
 
@@ -41,18 +43,50 @@ const typeDefs = gql`
         id: ID
         name: String
         symbol: String
-        description: String
+
+        rank: Int
+        is_new: Boolean
+
+        is_active: Boolean
+        type: String
+        tags: [Tag]
+
         team: [Team]
+
+        description: String
+        message: String
+        open_source: Boolean
+        hardware_wallet: Boolean
         started_at: String
+        development_status: String
         proof_type: String
+        org_structure: String
         hash_algorithm: String
-        whitePaper: String
-        links: [Links]
+        platform: String
+        whitePaper: Object
+        links: Link
+        links_extended: Object
+    }
+
+    type Tag {
+        id: String
+        name: String
+        coin_counter: Int   # Number of currencies with this tag
+        ico_counter: Int    # Number of ic projects with this tag
     }
 
     type Team {
         name: String
         position: String
+    }
+
+    type Link {
+        explorer: [String]
+        facebook: [String]
+        reddit: [String]
+        source_code: [String]
+        website: [String]
+        youtube: [String]
     }
 
     type PriceConverter {
@@ -65,32 +99,21 @@ const typeDefs = gql`
         amount: Int
         price: Float
     }
-
-    type Links {
-        website: String
-    }
     
     type Query {
         coins: [Coin]
-        coin(id: String): CoinById
+        coin(id: String!): CoinById!
     }
 `;
 
 const resolvers = {
     Query: {
-        coins: () => axios.get('https://api.coinpaprika.com/v1/tickers')
-        .then(res => res.data)
-        .catch(err => new Error(err)),
+        coins: (parent, args, { dataSources }) => {
+            return dataSources.coinAPI.getAllCoins()
+        },
 
-        coin:() => {
-            console.log('TODO: write coin resolver')
-            // axios.get(`https://api.coinpaprika.com/v1/coins`)
-            // .then(res => {
-            //     axios.get(`https://api.coinpaprika.com/v1/coins${res.data.id}`)
-            //     .then(c => console.log(c))
-            //     .catch(err => new Error(err))
-            // })
-            // .catch(err => new Error(err))
+        coin:(parent, { id }, { dataSources }) => {
+            return dataSources.coinAPI.getCoinById(id)
         },
         
     }
@@ -106,6 +129,6 @@ const server = new ApolloServer({
     }
 })
 
-server.listen().then(({ url }) => {
-    console.log(`server is running at ${url}`)
-})
+server.listen({ port: process.env.PORT || 4040 }).then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+  });
