@@ -1,3 +1,18 @@
+## Getting started
+
+clone or download the project from github
+
+#### To install dependencies run
+
+``` npm i ```   or ``` npm install ```
+
+
+#### To start the server run 
+
+``` npm run server ```
+
+Once your server is started you can go to http://localhost:4040 to get access to the graphql playground.
+
 # Examples
 
 ## Get all coins
