@@ -1,3 +1,5 @@
+Backend URL (Endpoint): https://crypto-graphql-api.herokuapp.com/
+
 ## Getting started
 
 clone or download the project from github
