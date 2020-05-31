@@ -1,3 +1,122 @@
+# Examples
+
+#### Get all coins
+
+``` graphql
+
+query coins {
+  coins {
+    id
+    name
+    symbol
+    rank
+    quotes {
+      USD {
+        price
+        market_cap
+        percent_change_1h
+      }
+    }
+  }
+}
+
+```
+
+##### response
+
+``` json
+
+{
+  "data": {
+    "coins": [
+      {
+        "id": "btc-bitcoin",
+        "name": "Bitcoin",
+        "symbol": "BTC",
+        "rank": 1,
+        "quotes": {
+          "USD": {
+            "price": 9648.87111781,
+            "market_cap": 177443038971,
+            "percent_change_1h": -0.15
+          }
+        }
+      },
+      {
+        "id": "miota-iota",
+        "name": "IOTA",
+        "symbol": "MIOTA",
+        "rank": 24,
+        "quotes": {
+          "USD": {
+            "price": 0.21740303,
+            "market_cap": 604278305,
+            "percent_change_1h": -0.81
+          }
+        }
+      },
+
+```
+
+#### get a single coin (id - required)
+
+``` graphql
+
+query coin {
+  coin(id: "btc-bitcoin"){
+    id
+    name
+    symbol
+    rank
+    is_new
+    is_active
+    description
+    team {
+      name
+      position
+    }
+  }
+}
+```
+
+##### response
+
+``` json
+
+{
+  "data": {
+    "coin": {
+      "id": "btc-bitcoin",
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "rank": 1,
+      "is_new": false,
+      "is_active": true,
+      "description": "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator.",
+      "team": [
+        {
+          "name": "Satoshi Nakamoto",
+          "position": "Founder"
+        },
+        {
+          "name": "Wladimir J. van der Laan",
+          "position": "Blockchain Developer"
+        },
+        {
+          "name": "Jonas Schnelli",
+          "position": "Blockchain Developer"
+        },
+        {
+          "name": "Marco Falke",
+          "position": "Blockchain Developer"
+        }
+      ]
+    }
+  }
+}
+
+```
+
 # Schema Types
 
 <details>
