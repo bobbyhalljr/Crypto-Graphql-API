@@ -1,6 +1,6 @@
 # Examples
 
-### Get all coins
+## Get all coins
 
 ``` graphql
 
@@ -58,7 +58,7 @@ query coins {
 
 ```
 
-### get a single coin (id - required)
+## get a single coin (id - required)
 
 ``` graphql
 
