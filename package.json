@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "document": "graphql-markdown http://localhost:4040 > README.md"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "graphql-type-json": "^0.3.1"
   },
   "devDependencies": {
+    "graphql-markdown": "^5.2.0",
     "nodemon": "^1.19.4"
   }
 }
