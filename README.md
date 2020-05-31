@@ -22,7 +22,7 @@ query coins {
 
 ```
 
-### response
+## response
 
 ``` json
 
@@ -79,7 +79,7 @@ query coin {
 }
 ```
 
-### response
+## response
 
 ``` json
 
