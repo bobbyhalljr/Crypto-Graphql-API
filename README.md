@@ -55,7 +55,7 @@ query coins {
           }
         }
       },
-
+      {"the list goes on": "over 1400 coins ..."}
 ```
 
 ## get a single coin (id - required)
