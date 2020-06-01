@@ -178,7 +178,8 @@ query coin {
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>coin</strong></td>
+<td colspan="1" valign="top"><strong>coin</strong></td>
+<td valign="bottom">id</td>
 <td valign="top"><a href="#coinbyid">CoinById</a>!</td>
 <td></td>
 </tr>
