@@ -1,5 +1,8 @@
 Backend URL (Endpoint): https://crypto-graphql-api.herokuapp.com/
 
+
+>❗️ crypto-graphql-api is created with apollo-server, and built on top of the coinpaprika REST API, there docs can be found [here](https://api.coinpaprika.com/)
+
 ## Getting started
 
 clone or download the project from github
